@@ -1,14 +1,17 @@
 import React from 'react';
+import Quote from './Quote';
 
 export default function QuoteList({ quotes }) {
-  const quoteList = quotes.map(quote => <li>{quote.content}</li>);
+  const quoteList = quotes.map(quote => <Quote quote={quote} />);
 
   return (
     <>
       <main className="container">
         <h1>List of Famous Movie Quotes</h1>
 
-        {quoteList}
+        <div className="accordion" id="accordionExample">
+          {quoteList}
+        </div>
       </main>
     </>
   );

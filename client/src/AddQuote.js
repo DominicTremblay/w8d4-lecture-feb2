@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 class AddQuote extends Component {

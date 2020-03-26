@@ -1,0 +1,14 @@
+.quote-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.quote-btn {
+  display: flex;
+  font-size: 0.5em;
+  margin: 0.3em;
+}
+
+.quote-btn form {
+  margin: 0.2em;
+}
