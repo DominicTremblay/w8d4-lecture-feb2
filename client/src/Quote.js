@@ -1,7 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Quote.css';
 
-export default function Quote(props) {
+export default function Quote({ id, content, deleteQuote }) {
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    deleteQuote(id);
+  };
+
   return (
     <div className="card">
       <div className="card-header" id="headingOne">
@@ -11,18 +18,18 @@ export default function Quote(props) {
               className="btn btn-link"
               type="button"
               data-toggle="collapse"
-              data-target={`#collapse1`}
+              data-target={`#collapse${id}`}
               aria-expanded="true"
               aria-controls="collapseOne"
             >
-              Content goes here
+              {content}
             </button>
 
             <div className="quote-btn">
-              <Link to="#" className="edit-btn">
+              <Link to={`/quotes/${id}`} className="edit-btn">
                 Edit
               </Link>
-              <form className="delete-quote-btn">
+              <form onSubmit={handleSubmit} className="delete-quote-btn">
                 <input type="submit" value="Delete" />
               </form>
             </div>
@@ -31,7 +38,7 @@ export default function Quote(props) {
       </div>
 
       <div
-        id={`collapse1`}
+        id={`collapse${id}`}
         className="collapse"
         aria-labelledby="headingOne"
         data-parent="#accordionExample"

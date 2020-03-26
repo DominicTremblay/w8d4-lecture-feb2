@@ -9,9 +9,11 @@ import QuoteList from './QuoteList';
 class App extends Component {
   constructor(props) {
     super(props);
+
+    // initial state
     this.state = {
       quotes: [],
-      redirect: false
+      loading: true
     };
   }
 
@@ -21,8 +23,9 @@ class App extends Component {
       url: '/api/quotes',
       data: { quote: content }
     })
-      .then(response => {
-        this.setState({ quotes: [...this.state.quotes, response.data] });
+      .then(result => {
+        // update the state with the quote being returned by the backend
+        this.setState({ quotes: [...this.state.quotes, result.data] });
       })
       .catch(err => console.log(err));
   };
@@ -32,7 +35,9 @@ class App extends Component {
       method: 'DELETE',
       url: `/api/quotes/${id}`
     })
-      .then(response => {
+      .then(result => {
+        // update the state
+
         this.setState({
           quotes: this.state.quotes.filter(quote => quote.id !== id)
         });
@@ -41,21 +46,24 @@ class App extends Component {
   };
 
   updateQuote = (id, content) => {
-    this.setState({ redirect: false });
     axios({
       method: 'PUT',
       url: `/api/quotes/${id}`,
       data: { quote: content }
     })
-      .then(({ data: newQuote }) => {
-        const updatedQuotes = this.state.quotes.map(quote => {
+      .then(result => {
+        // set the state. Find the quote to update, change its content
+
+        const newQuotes = this.state.quotes.map(quote => {
           if (quote.id === id) {
             quote.content = content;
           }
           return quote;
         });
 
-        this.setState({ quotes: updatedQuotes, redirect: true });
+        this.setState({
+          quotes: newQuotes
+        });
       })
       .catch(err => console.log(err));
   };
@@ -65,8 +73,9 @@ class App extends Component {
       method: 'GET',
       url: '/api/quotes'
     })
-      .then(response => {
-        this.setState({ quotes: response.data });
+      .then(result => {
+        // set the state with the quotes
+        this.setState({ quotes: result.data, loading: false });
       })
       .catch(err => console.log(err));
   }
@@ -74,7 +83,6 @@ class App extends Component {
   render() {
     return (
       <>
-        {this.state.redirect && <Redirect to="/quotes" />}
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <a className="navbar-brand" href="#">
             Navbar
