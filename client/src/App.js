@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import { Switch, Route, Link } from 'react-router-dom';
 import AddQuote from './AddQuote';
+import QuoteList from './QuoteList';
 
 class App extends Component {
   constructor(props) {
@@ -61,6 +62,11 @@ class App extends Component {
                 </a>
               </li>
               <li class="nav-item">
+                <Link to="/quotes/" className="nav-link">
+                  List of Quotes
+                </Link>
+              </li>
+              <li class="nav-item">
                 <Link to="/quotes/new" className="nav-link">
                   Add New Quote
                 </Link>
@@ -70,6 +76,13 @@ class App extends Component {
         </nav>
 
         <Switch>
+          <Route
+            exact
+            path="/quotes"
+            render={props => (
+              <QuoteList {...props} quotes={this.state.quotes} />
+            )}
+          />
           <Route
             path="/quotes/new"
             render={props => <AddQuote addNewQuote={this.addNewQuote} />}
