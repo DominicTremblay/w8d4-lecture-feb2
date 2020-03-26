@@ -13,7 +13,7 @@ class App extends Component {
   componentDidMount() {
     axios({
       method: 'GET',
-      url: '/quotes'
+      url: '/api/quotes'
     })
       .then(response => {
         this.setState({ quotes: response.data });
