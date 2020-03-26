@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import AddQuote from './AddQuote';
 import EditQuote from './EditQuote';
 import QuoteList from './QuoteList';
@@ -10,7 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quotes: []
+      quotes: [],
+      redirect: false
     };
   }
 
@@ -40,6 +41,7 @@ class App extends Component {
   };
 
   updateQuote = (id, content) => {
+    this.setState({ redirect: false });
     axios({
       method: 'PUT',
       url: `/api/quotes/${id}`,
@@ -53,7 +55,7 @@ class App extends Component {
           return quote;
         });
 
-        this.setState({ quotes: updatedQuotes });
+        this.setState({ quotes: updatedQuotes, redirect: true });
       })
       .catch(err => console.log(err));
   };
@@ -72,6 +74,7 @@ class App extends Component {
   render() {
     return (
       <>
+        {this.state.redirect && <Redirect to="/quotes" />}
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <a className="navbar-brand" href="#">
             Navbar
