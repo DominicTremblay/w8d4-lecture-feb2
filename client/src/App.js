@@ -12,6 +12,18 @@ class App extends Component {
     };
   }
 
+  addNewQuote = content => {
+    axios({
+      method: 'POST',
+      url: '/api/quotes',
+      data: { quote: content }
+    })
+      .then(response => {
+        this.setState({ quotes: [...this.state.quotes, response.data] });
+      })
+      .catch(err => console.log(err));
+  };
+
   componentDidMount() {
     axios({
       method: 'GET',
@@ -58,7 +70,10 @@ class App extends Component {
         </nav>
 
         <Switch>
-          <Route path="/quotes/new" component={AddQuote} />
+          <Route
+            path="/quotes/new"
+            render={props => <AddQuote addNewQuote={this.addNewQuote} />}
+          />
         </Switch>
       </>
     );

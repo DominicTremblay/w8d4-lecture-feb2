@@ -13,6 +13,7 @@ class AddQuote extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.props.addNewQuote(this.state.text);
   };
 
   render() {
