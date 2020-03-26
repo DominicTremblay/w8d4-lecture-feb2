@@ -17,6 +17,14 @@ module.exports = db => {
     return db.query(query).then(result => result.rows[0]);
   };
 
+  const updateQuote = (id, quote) => {
+    const query = {
+      text: 'UPDATE quotes SET content=$1 WHERE id=$2 RETURNING *',
+      values: [quote, id]
+    };
+    return db.query(query).then(result => result.rows[0]);
+  };
+
   const deleteQuote = id => {
     const query = {
       text: 'DELETE FROM quotes WHERE id=$1',
@@ -29,6 +37,7 @@ module.exports = db => {
   return {
     getQuotes,
     addQuote,
-    deleteQuote
+    deleteQuote,
+    updateQuote
   };
 };

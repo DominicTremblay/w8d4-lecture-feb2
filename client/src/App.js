@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import { Switch, Route, Link } from 'react-router-dom';
 import AddQuote from './AddQuote';
+import EditQuote from './EditQuote';
 import QuoteList from './QuoteList';
 
 class App extends Component {
@@ -34,6 +35,25 @@ class App extends Component {
         this.setState({
           quotes: this.state.quotes.filter(quote => quote.id !== id)
         });
+      })
+      .catch(err => console.log(err));
+  };
+
+  updateQuote = (id, content) => {
+    axios({
+      method: 'PUT',
+      url: `/api/quotes/${id}`,
+      data: { quote: content }
+    })
+      .then(({ data: newQuote }) => {
+        const updatedQuotes = this.state.quotes.map(quote => {
+          if (quote.id === id) {
+            quote.content = content;
+          }
+          return quote;
+        });
+
+        this.setState({ quotes: updatedQuotes });
       })
       .catch(err => console.log(err));
   };
@@ -103,6 +123,16 @@ class App extends Component {
           <Route
             path="/quotes/new"
             render={props => <AddQuote addNewQuote={this.addNewQuote} />}
+          />
+          <Route
+            path="/quotes/:id"
+            render={props => (
+              <EditQuote
+                {...props}
+                quotes={this.state.quotes}
+                updateQuote={this.updateQuote}
+              />
+            )}
           />
         </Switch>
       </>

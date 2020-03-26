@@ -5,10 +5,24 @@
 
 .quote-btn {
   display: flex;
+  align-items: center;
   font-size: 0.5em;
   margin: 0.3em;
 }
 
 .quote-btn form {
   margin: 0.2em;
+}
+
+.edit-btn {
+  border: 1px solid darkgrey;
+  color: black;
+  font-weight: 400;
+  padding: 0 1em;
+  text-decoration: none;
+  height: 2em;
+}
+
+.delete-quote-btn input {
+  height: 2em;
 }

@@ -1,10 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Quote.css';
 
 export default function Quote({ quote, deleteQuote }) {
   const handleDelete = event => {
     event.preventDefault();
     deleteQuote(quote.id);
+  };
+
+  const handleEdit = event => {
+    event.preventDefault();
   };
 
   return (
@@ -24,9 +29,9 @@ export default function Quote({ quote, deleteQuote }) {
             </button>
 
             <div className="quote-btn">
-              <form className="edit-quote-btn">
-                <input type="submit" value="Edit" />
-              </form>
+              <Link to={`/quotes/${quote.id}`} className="edit-btn">
+                Edit
+              </Link>
               <form onSubmit={handleDelete} className="delete-quote-btn">
                 <input type="submit" value="Delete" />
               </form>
