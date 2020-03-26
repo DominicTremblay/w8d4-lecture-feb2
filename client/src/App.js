@@ -25,6 +25,19 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
+  deleteQuote = id => {
+    axios({
+      method: 'DELETE',
+      url: `/api/quotes/${id}`
+    })
+      .then(response => {
+        this.setState({
+          quotes: this.state.quotes.filter(quote => quote.id !== id)
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
   componentDidMount() {
     axios({
       method: 'GET',
@@ -80,7 +93,11 @@ class App extends Component {
             exact
             path="/quotes"
             render={props => (
-              <QuoteList {...props} quotes={this.state.quotes} />
+              <QuoteList
+                {...props}
+                quotes={this.state.quotes}
+                deleteQuote={this.deleteQuote}
+              />
             )}
           />
           <Route

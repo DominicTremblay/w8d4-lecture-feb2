@@ -1,7 +1,12 @@
 import React from 'react';
 import './Quote.css';
 
-export default function Quote({ quote }) {
+export default function Quote({ quote, deleteQuote }) {
+  const handleDelete = event => {
+    event.preventDefault();
+    deleteQuote(quote.id);
+  };
+
   return (
     <div className="card">
       <div className="card-header" id="headingOne">
@@ -22,7 +27,7 @@ export default function Quote({ quote }) {
               <form className="edit-quote-btn">
                 <input type="submit" value="Edit" />
               </form>
-              <form className="delete-quote-btn">
+              <form onSubmit={handleDelete} className="delete-quote-btn">
                 <input type="submit" value="Delete" />
               </form>
             </div>

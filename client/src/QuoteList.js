@@ -1,8 +1,10 @@
 import React from 'react';
 import Quote from './Quote';
 
-export default function QuoteList({ quotes }) {
-  const quoteList = quotes.map(quote => <Quote quote={quote} />);
+export default function QuoteList({ quotes, deleteQuote }) {
+  const quoteList = quotes.map(quote => (
+    <Quote quote={quote} deleteQuote={deleteQuote} />
+  ));
 
   return (
     <>
